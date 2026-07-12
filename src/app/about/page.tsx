@@ -1,17 +1,15 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
-import WhatWeDo from "@/components/sections/WhatWeDo";
-import FeaturedProjects from "@/components/sections/FeaturedProjects";
+import AboutHero from "@/components/sections/about/AboutHero";
+import MissionVision from "@/components/sections/about/MissionVision";
 
-export default function Home() {
+export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen bg-black text-white font-sans">
       <Header />
       <main className="flex-1">
-        <Hero />
-        <WhatWeDo />
-        <FeaturedProjects />
+        <AboutHero />
+        <MissionVision />
       </main>
       <Footer />
     </div>

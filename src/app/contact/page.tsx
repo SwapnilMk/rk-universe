@@ -1,17 +1,13 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
-import WhatWeDo from "@/components/sections/WhatWeDo";
-import FeaturedProjects from "@/components/sections/FeaturedProjects";
+import ContactForm from "@/components/sections/contact/ContactForm";
 
-export default function Home() {
+export default function ContactPage() {
   return (
     <div className="flex flex-col min-h-screen bg-black text-white font-sans">
       <Header />
       <main className="flex-1">
-        <Hero />
-        <WhatWeDo />
-        <FeaturedProjects />
+        <ContactForm />
       </main>
       <Footer />
     </div>
