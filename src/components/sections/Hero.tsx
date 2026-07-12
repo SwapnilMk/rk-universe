@@ -65,7 +65,7 @@ export default function Hero() {
             </h3>
             
             <p className="hero-text text-white/80 text-lg md:text-xl max-w-lg mb-10 leading-relaxed font-light">
-              We create films, series and content that entertain, inspire and leave a lasting impact.
+               We create films, series and content that entertain, inspire and leave a lasting impact.
               Driven by creativity. Defined by passion.
             </p>
             
