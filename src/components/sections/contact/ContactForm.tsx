@@ -41,11 +41,24 @@ export default function ContactForm() {
     <section ref={container} className="relative w-full min-h-screen bg-[#050505] text-white overflow-hidden font-sans">
       
       {/* Hero Section */}
-      <div className="relative w-full min-h-[500px] md:min-h-[600px] flex items-center border-b border-white/10">
+      <div className="relative w-full flex flex-col md:flex-row md:min-h-[600px] items-center border-b border-white/10 pt-20 md:pt-0">
         
-        {/* Right Background Image (Blended) */}
+        {/* Mobile-only Image (Shows at top, fully visible) */}
+        <div className="cf-hero-img relative w-full h-[300px] sm:h-[400px] md:hidden block pointer-events-none z-0 mt-4">
+           {/* Gradient to smoothly blend the bottom into the text section */}
+           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent z-10"></div>
+           <Image 
+            src="/rkabout.png" 
+            alt="RK Founder" 
+            fill 
+            className="object-contain object-bottom mix-blend-lighten px-4"
+            priority
+          />
+        </div>
+
+        {/* Desktop-only Background Image (Blended on right) */}
         <div 
-          className="cf-hero-img absolute right-0 top-0 w-full md:w-[65%] h-full pointer-events-none z-0 opacity-40 md:opacity-100"
+          className="cf-hero-img hidden md:block absolute right-0 top-0 w-[65%] h-full pointer-events-none z-0"
           style={{ 
             maskImage: "linear-gradient(to right, transparent, black 20%, black 80%, transparent 100%), linear-gradient(to top, transparent, black 15%)", 
             WebkitMaskImage: "linear-gradient(to right, transparent, black 30%), linear-gradient(to top, transparent, black 15%)",
@@ -57,13 +70,13 @@ export default function ContactForm() {
             src="/rkabout.png" 
             alt="RK Founder" 
             fill 
-            className="object-cover md:object-contain object-right md:object-right-bottom mix-blend-lighten"
+            className="object-cover object-right-bottom mix-blend-lighten"
             priority
           />
         </div>
 
         {/* Left: Text Content */}
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 pb-20 flex flex-col justify-center">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 pt-8 md:pt-32 pb-16 md:pb-20 flex flex-col justify-center">
           <div className="w-full md:w-[60%]">
             <div className="cf-hero-text flex items-center gap-4 mb-4">
               <div className="h-[1px] w-12 bg-[#d4af37]"></div>
@@ -107,7 +120,7 @@ export default function ContactForm() {
                 </div>
                 <div className="flex flex-col justify-center">
                   <h4 className="text-[#d4af37] text-[11px] font-semibold tracking-widest uppercase mb-1">Email Us</h4>
-                  <a href="mailto:contact@rkuniverse.com" className="text-white text-sm hover:text-[#d4af37] transition-colors mb-1 font-medium">contact@rkuniverse.com</a>
+                  <a href="mailto:contact@rkuniverse.world" className="text-white text-sm hover:text-[#d4af37] transition-colors mb-1 font-medium">contact@rkuniverse.world</a>
                   <p className="text-white/50 text-[11px]">We aim to respond within 24-48 hours.</p>
                 </div>
               </div>
@@ -118,7 +131,7 @@ export default function ContactForm() {
                 </div>
                 <div className="flex flex-col justify-center">
                   <h4 className="text-[#d4af37] text-[11px] font-semibold tracking-widest uppercase mb-1">Call Us</h4>
-                  <a href="tel:+919876543210" className="text-white text-sm hover:text-[#d4af37] transition-colors mb-1 font-medium">+91 98765 43210</a>
+                  <a href="tel:+917208046058" className="text-white text-sm hover:text-[#d4af37] transition-colors mb-1 font-medium">+91 7208046058</a>
                   <p className="text-white/50 text-[11px]">Monday &ndash; Saturday | 10:00 AM &ndash; 7:00 PM (IST)</p>
                 </div>
               </div>
@@ -129,8 +142,7 @@ export default function ContactForm() {
                 </div>
                 <div className="flex flex-col justify-center">
                   <h4 className="text-[#d4af37] text-[11px] font-semibold tracking-widest uppercase mb-1">Our Studio</h4>
-                  <p className="text-white text-sm font-medium mb-1">RK Universe, Global Creative House</p>
-                  <p className="text-white/50 text-[11px] leading-relaxed">Mumbai, Maharashtra, India<br/>400047</p>
+                  <p className="text-white text-sm font-medium mb-1">Mumbai, India</p>
                 </div>
               </div>
 
