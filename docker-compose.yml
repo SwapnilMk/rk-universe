@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  rkuniverse:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-swapnilmk}/rk-universe:latest
+    container_name: rkuniverse
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
