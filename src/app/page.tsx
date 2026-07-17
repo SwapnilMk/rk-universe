@@ -3,7 +3,7 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Image from "next/image";
-import { Video, Palette, Feather, Star, Award, Crown, Globe, Car, ChevronLeft, ChevronRight, Home as HomeIcon } from "lucide-react";
+import { Video, Palette, Feather, Star, Award, Crown, Globe, Car, ChevronLeft, ChevronRight, Home as HomeIcon, Heart } from "lucide-react";
 import { useRef, useState, useCallback, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -144,6 +144,17 @@ export default function Home() {
       link: 'https://www.instagram.com/rahilkhanmaison/',
       linkText: 'EXPLORE MASION',
       icon: HomeIcon,
+      color: '#d4af37'
+    },
+    {
+      id: 'rkcarecircle',
+      title: 'RK CARE CIRCLE',
+      subtitle: 'Community',
+      desc: '❤️ Humanity Awareness Initiative\nStories • Awareness • Community\nConnecting Humanity Through Stories',
+      image: '/rkcarecirclebanner.png',
+      link: 'https://www.instagram.com/rkcarecircle',
+      linkText: 'EXPLORE COMMUNITY',
+      icon: Heart,
       color: '#d4af37'
     }
   ];

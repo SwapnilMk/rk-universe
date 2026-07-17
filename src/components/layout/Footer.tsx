@@ -1,7 +1,11 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Disc } from "lucide-react"; 
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const Instagram = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
@@ -54,36 +58,49 @@ export default function Footer() {
             <p className="text-white/60 text-sm">Select a profile to follow</p>
           </div>
           
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 lg:gap-16">
-            {[
-              { name: "GREEN CHILLIES", handle: "@greenchillies.media" },
-              { name: "RK ART COLLECTION", handle: "@rkart.world" },
-              { name: "RK CHRONICLES", handle: "@therkchronicles" },
-              { name: "RK MOBILITY", handle: "@rkmobility" },
-              { name: "RK MASION", handle: "@rahilkhanmaison" }
-            ].map((account, index, array) => (
-              <React.Fragment key={account.name}>
-                <div className="flex flex-col items-center gap-4">
-                  <Link href={`https://instagram.com/${account.handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="relative group w-16 h-16 md:w-20 md:h-20 rounded-full border border-[#d4af37]/50 flex items-center justify-center text-[#d4af37] transition-all duration-300 hover:scale-105 hover:bg-[#d4af37]/5">
-                    <div className="absolute inset-0 rounded-full shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)] transition-all duration-300"></div>
-                    <div className="absolute inset-1 rounded-full border border-[#d4af37]/20"></div>
-                    <Instagram className="w-6 h-6 md:w-7 md:h-7 relative z-10" />
-                    <div className="absolute top-1 right-1 md:right-2 w-1 h-1 bg-white rounded-full shadow-[0_0_5px_#fff]"></div>
-                    <div className="absolute bottom-1 md:bottom-2 left-1 md:left-2 w-1.5 h-1.5 bg-[#d4af37] rounded-full shadow-[0_0_8px_#d4af37]"></div>
-                  </Link>
-                  <div className="text-center">
-                    <h5 className="text-[#d4af37] font-serif font-bold text-xs md:text-sm tracking-widest uppercase">{account.name}</h5>
-                    <p className="text-white/60 text-[10px] md:text-xs mt-1">{account.handle}</p>
-                  </div>
-                </div>
+          <Carousel 
+            opts={{ align: "center", dragFree: true, loop: true }}
+            plugins={[Autoplay({ delay: 3000, stopOnInteraction: false })]}
+            className="w-full max-w-[85vw] md:max-w-3xl lg:max-w-4xl xl:max-w-6xl mx-auto"
+          >
+            <CarouselContent className="-ml-4 md:-ml-8">
+              {[
+                { name: "GREEN CHILLIES", handle: "@greenchillies.media" },
+                { name: "RK ART COLLECTION", handle: "@rkart.world" },
+                { name: "RK CHRONICLES", handle: "@therkchronicles" },
+                { name: "RK MOBILITY", handle: "@rkmobility" },
+                { name: "RK MASION", handle: "@rahilkhanmaison" },
+                { name: "RK CARE CIRCLE", handle: "@rkcarecircle" }
+              ].map((account, index, array) => (
+                <CarouselItem key={account.name} className="pl-4 md:pl-8 basis-auto">
+                  <div className="flex items-center h-full">
+                    <div className="flex flex-col items-center gap-4 w-[160px]">
+                      <Link href={`https://instagram.com/${account.handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="relative group w-16 h-16 md:w-20 md:h-20 rounded-full border border-[#d4af37]/50 flex items-center justify-center text-[#d4af37] transition-all duration-300 hover:scale-105 hover:bg-[#d4af37]/5">
+                        <div className="absolute inset-0 rounded-full shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)] transition-all duration-300"></div>
+                        <div className="absolute inset-1 rounded-full border border-[#d4af37]/20"></div>
+                        <Instagram className="w-6 h-6 md:w-7 md:h-7 relative z-10" />
+                        <div className="absolute top-1 right-1 md:right-2 w-1 h-1 bg-white rounded-full shadow-[0_0_5px_#fff]"></div>
+                        <div className="absolute bottom-1 md:bottom-2 left-1 md:left-2 w-1.5 h-1.5 bg-[#d4af37] rounded-full shadow-[0_0_8px_#d4af37]"></div>
+                      </Link>
+                      <div className="text-center px-2">
+                        <h5 className="text-[#d4af37] font-serif font-bold text-xs md:text-sm tracking-widest uppercase truncate w-full">{account.name}</h5>
+                        <p className="text-white/60 text-[10px] md:text-xs mt-1 truncate w-full">{account.handle}</p>
+                      </div>
+                    </div>
 
-                {/* Divider (Desktop) - show between items, but not after the last one */}
-                {index < array.length - 1 && (
-                  <div className="hidden lg:block w-px h-16 bg-white/10"></div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
+                    {/* Divider (Desktop) - show between items, but not after the last one */}
+                    {index < array.length - 1 && (
+                      <div className="hidden lg:block w-px h-16 bg-white/10 flex-none ml-4 md:ml-8"></div>
+                    )}
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="hidden md:block">
+              <CarouselPrevious className="border-[#d4af37]/50 text-[#d4af37] hover:bg-[#d4af37] hover:text-black bg-black" />
+              <CarouselNext className="border-[#d4af37]/50 text-[#d4af37] hover:bg-[#d4af37] hover:text-black bg-black" />
+            </div>
+          </Carousel>
         </div>
       </div>
 
@@ -123,7 +140,7 @@ export default function Footer() {
             <div className="flex-1 lg:pl-12">
               <h4 className="text-white font-semibold text-xs tracking-widest uppercase mb-6">Contact Us</h4>
               <ul className="space-y-3 text-xs text-white/60">
-                <li>contact@rkuniverse.com</li>
+                {/* <li>contact@rkuniverse.com</li> */}
                 <li>RK Universe, Global Creative House</li>
               </ul>
             </div>

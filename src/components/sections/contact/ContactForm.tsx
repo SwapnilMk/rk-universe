@@ -114,6 +114,7 @@ export default function ContactForm() {
             </h3>
             
             <div className="flex flex-col gap-8">
+              {/* 
               <div className="cf-content flex gap-6 group">
                 <div className="w-12 h-12 shrink-0 rounded-full border border-white/20 flex items-center justify-center text-[#d4af37] group-hover:border-[#d4af37] transition-colors">
                   <Mail className="w-5 h-5" />
@@ -134,7 +135,8 @@ export default function ContactForm() {
                   <a href="tel:+917208046058" className="text-white text-sm hover:text-[#d4af37] transition-colors mb-1 font-medium">+91 7208046058</a>
                   <p className="text-white/50 text-[11px]">Monday &ndash; Saturday | 10:00 AM &ndash; 7:00 PM (IST)</p>
                 </div>
-              </div>
+              </div> 
+              */}
 
               <div className="cf-content flex gap-6 group">
                 <div className="w-12 h-12 shrink-0 rounded-full border border-white/20 flex items-center justify-center text-[#d4af37] group-hover:border-[#d4af37] transition-colors">
