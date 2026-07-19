@@ -3,6 +3,7 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Image from "next/image";
+import Link from "next/link";
 import { Video, Palette, Feather, Star, Award, Crown, Globe, Car, ChevronLeft, ChevronRight, Home as HomeIcon, Heart } from "lucide-react";
 import { useRef, useState, useCallback, useEffect } from "react";
 import gsap from "gsap";
@@ -92,6 +93,17 @@ export default function Home() {
 
   const originalSlides = [
     {
+      id: 'rkcarecircle',
+      title: 'RK CARE CIRCLE',
+      subtitle: 'Community',
+      desc: '❤️ Humanity Awareness Initiative\nStories • Awareness • Community\nConnecting Humanity Through Stories',
+      image: '/rkcarecirclebanner.png',
+      link: '/care-circle',
+      linkText: 'EXPLORE COMMUNITY',
+      icon: Heart,
+      color: '#d4af37'
+    },
+    {
       id: 'green-chillies',
       title: 'GREEN CHILLIES',
       subtitle: 'Entertainment And Media',
@@ -144,17 +156,6 @@ export default function Home() {
       link: 'https://www.instagram.com/rahilkhanmaison/',
       linkText: 'EXPLORE MASION',
       icon: HomeIcon,
-      color: '#d4af37'
-    },
-    {
-      id: 'rkcarecircle',
-      title: 'RK CARE CIRCLE',
-      subtitle: 'Community',
-      desc: '❤️ Humanity Awareness Initiative\nStories • Awareness • Community\nConnecting Humanity Through Stories',
-      image: '/rkcarecirclebanner.png',
-      link: 'https://www.instagram.com/rkcarecircle',
-      linkText: 'EXPLORE COMMUNITY',
-      icon: Heart,
       color: '#d4af37'
     }
   ];
@@ -261,15 +262,25 @@ export default function Home() {
                         <p className="text-white/70 text-[11px] xl:text-xs leading-[1.8] mb-auto font-light">
                           {slide.desc}
                         </p>
-                        <a 
-                          href={slide.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="border text-[10px] xl:text-[11px] font-semibold tracking-widest px-6 xl:px-8 py-2.5 transition-colors uppercase mt-6 flex items-center gap-2 group-hover/card:bg-white/5"
-                          style={{ borderColor: `${slide.color}50`, color: slide.color }}
-                        >
-                          {slide.linkText} <span className="text-[14px] leading-none">&rsaquo;</span>
-                        </a>
+                        {slide.link.startsWith('http') ? (
+                          <a 
+                            href={slide.link} 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="border text-[10px] xl:text-[11px] font-semibold tracking-widest px-6 xl:px-8 py-2.5 transition-colors uppercase mt-6 flex items-center gap-2 group-hover/card:bg-white/5"
+                            style={{ borderColor: `${slide.color}50`, color: slide.color }}
+                          >
+                            {slide.linkText} <span className="text-[14px] leading-none">&rsaquo;</span>
+                          </a>
+                        ) : (
+                          <Link 
+                            href={slide.link} 
+                            className="border text-[10px] xl:text-[11px] font-semibold tracking-widest px-6 xl:px-8 py-2.5 transition-colors uppercase mt-6 flex items-center gap-2 group-hover/card:bg-white/5"
+                            style={{ borderColor: `${slide.color}50`, color: slide.color }}
+                          >
+                            {slide.linkText} <span className="text-[14px] leading-none">&rsaquo;</span>
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </div>
