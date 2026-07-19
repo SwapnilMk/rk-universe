@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Mail, Disc } from "lucide-react"; 
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-
+import { useState } from "react";
 const Instagram = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
 );
@@ -14,6 +14,39 @@ const Instagram = (props: React.SVGProps<SVGSVGElement>) => (
 
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus('loading');
+    setMessage('');
+
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setStatus('error');
+        setMessage(data.message || 'Something went wrong');
+      } else {
+        setStatus('success');
+        setMessage('Thanks for subscribing!');
+        setEmail('');
+      }
+    } catch (err) {
+      setStatus('error');
+      setMessage('Something went wrong. Please try again.');
+    }
+  };
+
   return (
     <footer className="w-full text-white font-sans border-t border-white/5">
       {/* Newsletter Section */}
@@ -31,16 +64,31 @@ export default function Footer() {
             </div>
           </div>
           
-          <div className="w-full md:w-auto flex-1 max-w-md flex">
-            <input 
-              type="email" 
-              placeholder="Enter your email address"
-              className="w-full bg-black border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]/50"
-            />
-            <button className="bg-[#d4af37] text-black px-6 lg:px-8 py-3 text-xs font-semibold tracking-widest hover:bg-[#d4af37]/80 transition-colors">
-              SUBSCRIBE
-            </button>
-          </div>
+          <form onSubmit={handleSubscribe} className="w-full md:w-auto flex-1 max-w-md flex flex-col gap-2">
+            <div className="flex w-full">
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={status === 'loading'}
+                placeholder="Enter your email address"
+                className="w-full bg-black border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]/50 disabled:opacity-50"
+                required
+              />
+              <button 
+                type="submit"
+                disabled={status === 'loading'}
+                className="bg-[#d4af37] text-black px-6 lg:px-8 py-3 text-xs font-semibold tracking-widest hover:bg-[#d4af37]/80 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {status === 'loading' ? 'WAIT...' : 'SUBSCRIBE'}
+              </button>
+            </div>
+            {message && (
+              <p className={`text-xs ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                {message}
+              </p>
+            )}
+          </form>
         </div>
       </div>
 

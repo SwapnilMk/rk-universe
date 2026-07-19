@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import gsap from "gsap";
@@ -11,6 +12,48 @@ import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
   const container = useRef(null);
+  const router = useRouter();
+  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setError("Please enter both email and password.");
+      return;
+    }
+
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Invalid credentials');
+      }
+
+      if (result.user.role === 'admin') {
+        router.push('/dashboard');
+      } else {
+        router.push('/');
+      }
+      router.refresh();
+    } catch (err: any) {
+      setError(err.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -45,7 +88,12 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <form className="flex flex-col gap-5">
+          <form onSubmit={handleLogin} className="flex flex-col gap-5">
+            {error && (
+              <div className="text-red-400 text-xs text-center border border-red-500/20 bg-red-500/10 py-2 rounded-sm mb-2">
+                {error}
+              </div>
+            )}
             <div className="auth-elem flex flex-col gap-2 relative">
               <label className="text-white/60 text-[10px] uppercase tracking-widest font-medium ml-1">Email Address</label>
               <div className="relative">
@@ -54,8 +102,12 @@ export default function LoginPage() {
                 </div>
                 <input 
                   type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-sm pl-11 pr-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#d4af37]/70 transition-colors"
+                  disabled={loading}
+                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-sm pl-11 pr-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#d4af37]/70 transition-colors disabled:opacity-50"
+                  required
                 />
               </div>
             </div>
@@ -73,16 +125,24 @@ export default function LoginPage() {
                 </div>
                 <input 
                   type="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-sm pl-11 pr-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#d4af37]/70 transition-colors"
+                  disabled={loading}
+                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-sm pl-11 pr-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#d4af37]/70 transition-colors disabled:opacity-50"
+                  required
                 />
               </div>
             </div>
 
             <div className="auth-elem mt-6">
-              <Button type="button" className="w-full bg-[#d4af37] hover:bg-[#b38b22] text-black font-semibold tracking-widest uppercase rounded-sm py-6 flex items-center justify-center gap-2 group transition-all">
-                Sign In
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <Button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-[#d4af37] hover:bg-[#b38b22] text-black font-semibold tracking-widest uppercase rounded-sm py-6 flex items-center justify-center gap-2 group transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {loading ? 'WAIT...' : 'Sign In'}
+                {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
               </Button>
             </div>
           </form>
