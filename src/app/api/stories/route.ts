@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { transporter } from '@/lib/nodemailer';
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION || 'ap-south-1',
@@ -84,6 +85,34 @@ export async function POST(req: Request) {
         status: "pending",
       },
     });
+
+    try {
+      const adminEmail = process.env.EMAIL_USER;
+      if (adminEmail) {
+        await transporter.sendMail({
+          from: `"RK Universe" <${adminEmail}>`,
+          to: adminEmail,
+          subject: `New Story Submission from ${fullName}`,
+          html: `
+            <h2>New Story Submission</h2>
+            <p><strong>Name:</strong> ${fullName}</p>
+            <p><strong>Email:</strong> ${email || 'N/A'}</p>
+            <p><strong>Phone:</strong> ${contactNumber}</p>
+            <p><strong>City:</strong> ${city}</p>
+            <p><strong>Category:</strong> ${category}</p>
+            <p><strong>Relationship:</strong> ${relationship}</p>
+            <p><strong>Contact Preference:</strong> ${contactPreference}</p>
+            <h3>Story Description:</h3>
+            <p>${storyDescription}</p>
+            <hr />
+            <p>Please log in to the admin dashboard to review the full details and attached documents.</p>
+          `,
+        });
+        console.log(`Successfully sent admin notification email for story: ${story.id}`);
+      }
+    } catch (mailError) {
+      console.error('Failed to send admin notification email:', mailError);
+    }
 
     return NextResponse.json({ success: true, story }, { status: 201 });
   } catch (error: any) {
