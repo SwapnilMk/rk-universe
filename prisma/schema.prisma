@@ -28,7 +28,29 @@ model Story {
   category          String
   storyDescription  String
   contactPreference String
-  status            String    @default("pending") // pending, approved, rejected
+  identityProofUrl  String?
+  relevantDocsUrl   String?
+  hospitalDocsUrl   String?
+  otherDocsUrl      String?
+  status            String    @default("pending") // pending, query, approved, promotion, rejected
+  assignedTo        String?
+  priority          String?
+  promotionDays     String?
+  promotionPlatforms String[]
+  
+  // Workflow fields
+  queryMessage      String?
+  queryResponse     String?
+  queryResponseDocs String[]  @default([])
+  approvalNote      String?
+  promotionStartDate DateTime?
+  promotionEndDate   DateTime?
+  campaignStatus    String?
+  reach             Int?
+  clicks            Int?
+  engagement        Int?
+  videoViews        Int?
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import {
   Table,
@@ -31,12 +32,13 @@ export default async function StoriesPage() {
               <TableHead className="text-white/60">Category</TableHead>
               <TableHead className="text-white/60">City</TableHead>
               <TableHead className="text-white/60">Status</TableHead>
+              <TableHead className="text-white/60 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {stories.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-white/40 py-8">
+                <TableCell colSpan={6} className="text-center text-white/40 py-8">
                   No stories found.
                 </TableCell>
               </TableRow>
@@ -55,6 +57,11 @@ export default async function StoriesPage() {
                     }`}>
                       {story.status.toUpperCase()}
                     </span>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Link href={`/dashboard/stories/${story.id}`} className="text-[#d4af37] hover:text-[#e5c158] text-sm">
+                      View
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))
