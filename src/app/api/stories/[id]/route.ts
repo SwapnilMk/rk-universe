@@ -28,8 +28,8 @@ export async function PATCH(
     if (queryResponseDocs !== undefined) dataToUpdate.queryResponseDocs = queryResponseDocs;
     if (approvalNote !== undefined) dataToUpdate.approvalNote = approvalNote;
     
-    if (promotionStartDate !== undefined) dataToUpdate.promotionStartDate = promotionStartDate;
-    if (promotionEndDate !== undefined) dataToUpdate.promotionEndDate = promotionEndDate;
+    if (promotionStartDate !== undefined) dataToUpdate.promotionStartDate = new Date(promotionStartDate);
+    if (promotionEndDate !== undefined) dataToUpdate.promotionEndDate = new Date(promotionEndDate);
     if (campaignStatus !== undefined) dataToUpdate.campaignStatus = campaignStatus;
     if (reach !== undefined) dataToUpdate.reach = reach;
     if (clicks !== undefined) dataToUpdate.clicks = clicks;
